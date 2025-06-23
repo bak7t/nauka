@@ -1,0 +1,230 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Картотека научного проекта</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-blue-600 text-white py-6 shadow-md">
+        <div class="container mx-auto px-4">
+            <h1 class="text-2xl font-semibold">Картотека научных публикаций</h1>
+            <p class="text-sm">Управление отечественными и зарубежными источниками</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Форма для добавления записи -->
+        <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-semibold mb-4">Добавить новую публикацию</h2>
+            <form id="publicationForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="author" class="block text-sm font-medium text-gray-700">Автор(ы)</label>
+                    <input type="text" id="author" class="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700">Название</label>
+                    <input type="text" id="title" class="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label for="source" class="block text-sm font-medium text-gray-700">Источник</label>
+                    <input type="text" id="source" class="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="year" class="block text-sm font-medium text-gray-700">Год</label>
+                    <input type="number" id="year" class="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500" min="1900" max="2025">
+                </div>
+                <div>
+                    <label for="type" class="block text-sm font-medium text-gray-700">Тип публикации</label>
+                    <select id="type" class="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="Статья">Статья</option>
+                        <option value="Книга">Книга</option>
+                        <option value="Тезисы">Тезисы конференции</option>
+                        <option value="Диссертация">Диссертация</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="language" class="block text-sm font-medium text-gray-700">Язык</label>
+                    <select id="language" class="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="Казахский">Казахский</option>
+                        <option value="Русский">Русский</option>
+                        <option value="Английский">Английский</option>
+                        <option value="Другой">Другой</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label for="keywords" class="block text-sm font-medium text-gray-700">Ключевые слова</label>
+                    <input type="text" id="keywords" class="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Например: климат, Казахстан, сельское хозяйство">
+                </div>
+                <div class="md:col-span-2">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Добавить</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Фильтры -->
+        <section class="mb-6 flex flex-col md:flex-row gap-4">
+            <input type="text" id="search" class="p-2 border rounded-md w-full md:w-1/3 focus:ring-blue-500 focus:border-blue-500" placeholder="Поиск по автору, названию или ключевым словам">
+            <select id="filterType" class="p-2 border rounded-md w-full md:w-1/6 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Все типы</option>
+                <option value="Статья">Статья</option>
+                <option value="Книга">Книга</option>
+                <option value="Тезисы">Тезисы конференции</option>
+                <option value="Диссертация">Диссертация</option>
+            </select>
+            <select id="filterLanguage" class="p-2 border rounded-md w-full md:w-1/6 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Все языки</option>
+                <option value="Казахский">Казахский</option>
+                <option value="Русский">Русский</option>
+                <option value="Английский">Английский</option>
+                <option value="Другой">Другой</option>
+            </select>
+        </section>
+
+        <!-- Таблица публикаций -->
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Список публикаций</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Автор(ы)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Название</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Источник</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Год</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Тип</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Язык</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ключевые слова</th>
+                        </tr>
+                    </thead>
+                    <tbody id="publicationTable" class="bg-white divide-y divide-gray-200">
+                        <!-- Данные будут добавляться через JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-4 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2025 Картотека научных проектов</p>
+        </div>
+    </footer>
+
+    <script>
+        const form = document.getElementById('publicationForm');
+        const tableBody = document.getElementById('publicationTable');
+        const searchInput = document.getElementById('search');
+        const filterType = document.getElementById('filterType');
+        const filterLanguage = document.getElementById('filterLanguage');
+        let publications = JSON.parse(localStorage.getItem('publications')) || [];
+
+        // Отображение данных
+        function renderTable(data) {
+            tableBody.innerHTML = '';
+            data.forEach(pub => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${pub.author}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${pub.title}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${pub.source}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${pub.year}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${pub.type}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${pub.language}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${pub.keywords}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Добавление новой записи
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const publication = {
+                author: document.getElementById('author').value,
+                title: document.getElementById('title').value,
+                source: document.getElementById('source').value,
+                year: document.getElementById('year').value,
+                type: document.getElementById('type').value,
+                language: document.getElementById('language').value,
+                keywords: document.getElementById('keywords').value
+            };
+            publications.push(publication);
+            localStorage.setItem('publications', JSON.stringify(publications));
+            renderTable(publications);
+            form.reset();
+        });
+
+        // Фильтрация и поиск
+        function filterPublications() {
+            let filtered = publications;
+            const searchTerm = searchInput.value.toLowerCase();
+            const typeFilter = filterType.value;
+            const languageFilter = filterLanguage.value;
+
+            if (searchTerm) {
+                filtered = filtered.filter(pub =>
+                    pub.author.toLowerCase().includes(searchTerm) ||
+                    pub.title.toLowerCase().includes(searchTerm) ||
+                    pub.keywords.toLowerCase().includes(searchTerm)
+                );
+            }
+            if (typeFilter) {
+                filtered = filtered.filter(pub => pub.type === typeFilter);
+            }
+            if (languageFilter) {
+                filtered = filtered.filter(pub => pub.language === languageFilter);
+            }
+            renderTable(filtered);
+        }
+
+        searchInput.addEventListener('input', filterPublications);
+        filterType.addEventListener('change', filterPublications);
+        filterLanguage.addEventListener('change', filterPublications);
+
+        // Инициализация
+        renderTable(publications);
+    </script>
+</body>
+</html>
