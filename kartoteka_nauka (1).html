@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Картотека научного проекта | ЖТН AP23490584</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --surface2: #1e2333;
+    --border: #2a3050;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: rgba(201,168,76,0.12);
+    --text: #e8eaf0;
+    --text-muted: #8892b0;
+    --text-dim: #5a6480;
+    --accent: #4f8ef7;
+    --accent2: #7c5cbf;
+    --green: #3dbf8a;
+    --red: #e05252;
+    --radius: 12px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(79,142,247,0.05) 0%, transparent 60%);
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #12161f 0%, #1a1f32 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .logo-block { display: flex; align-items: center; gap: 16px; }
+
+  .logo-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .logo-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--gold-light);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  .logo-text p {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    font-weight: 300;
+    letter-spacing: 0.4px;
+  }
+
+  /* LANG SWITCHER */
+  .lang-switcher {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+
+  .lang-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .lang-btn.active {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: #1a1400;
+  }
+
+  .lang-btn:hover:not(.active) { background: var(--surface2); color: var(--text); }
+
+  /* HERO BANNER */
+  .hero {
+    background: linear-gradient(135deg, #13172200 0%, #1e2333 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    max-width: 600px;
+  }
+
+  .hero-text h2 span { color: var(--gold-light); }
+
+  .hero-text p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  .hero-badge {
+    background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--gold);
+    display: inline-block;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .stat-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+  }
+
+  .stat-card .lbl {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  /* MAIN CONTENT */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  /* SIDEBAR FORM */
+  .sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 88px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .card-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card-header .icon {
+    width: 36px; height: 36px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .card-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .card-body { padding: 20px 24px; }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: 'IBM Plex Sans', sans-serif;
+    appearance: none;
+  }
+
+  .form-input:focus, .form-select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+
+  .form-input::placeholder { color: var(--text-dim); }
+
+  .form-select option { background: var(--surface2); }
+
+  .btn-primary {
+    width: 100%;
+    padding: 11px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: #1a1400;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans', sans-serif;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* TABLE SECTION */
+  .table-section { flex: 1; min-width: 0; }
+
+  /* FILTERS */
+  .filters-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px 9px 36px;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .search-input:focus { border-color: var(--gold); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  .filter-select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans', sans-serif;
+    appearance: none;
+    padding-right: 28px;
+    min-width: 130px;
+  }
+
+  .filter-select:focus { border-color: var(--gold); }
+  .filter-select option { background: var(--surface); }
+
+  .filter-wrap { position: relative; }
+
+  .filter-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 11px;
+    pointer-events: none;
+  }
+
+  /* TABLE */
+  .table-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+
+  .table-top {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .table-top h3 { font-size: 14px; font-weight: 600; color: var(--text); }
+  .table-count { font-size: 12px; color: var(--text-dim); background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; }
+
+  .table-wrap { overflow-x: auto; }
+
+  table { width: 100%; border-collapse: collapse; min-width: 700px; }
+
+  thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(42,48,80,0.5);
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover { background: rgba(201,168,76,0.04); }
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody td {
+    padding: 13px 16px;
+    font-size: 13px;
+    color: var(--text);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  .td-author { font-weight: 500; color: var(--gold-light); }
+  .td-title { max-width: 220px; }
+  .td-source { color: var(--text-muted); font-size: 12px; }
+  .td-year { color: var(--accent); font-weight: 500; white-space: nowrap; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .badge-type-article { background: rgba(79,142,247,0.15); color: #7bb3ff; border: 1px solid rgba(79,142,247,0.25); }
+  .badge-type-book { background: rgba(124,92,191,0.15); color: #b49de0; border: 1px solid rgba(124,92,191,0.25); }
+  .badge-type-thesis { background: rgba(61,191,138,0.15); color: #72dbb4; border: 1px solid rgba(61,191,138,0.25); }
+  .badge-type-diss { background: rgba(224,82,82,0.15); color: #f58e8e; border: 1px solid rgba(224,82,82,0.25); }
+
+  .badge-lang-kz { background: rgba(201,168,76,0.15); color: var(--gold-light); border: 1px solid rgba(201,168,76,0.25); }
+  .badge-lang-ru { background: rgba(79,142,247,0.12); color: #99c0ff; border: 1px solid rgba(79,142,247,0.2); }
+  .badge-lang-en { background: rgba(61,191,138,0.12); color: #72dbb4; border: 1px solid rgba(61,191,138,0.2); }
+  .badge-lang-other { background: rgba(90,100,128,0.2); color: var(--text-muted); border: 1px solid rgba(90,100,128,0.3); }
+
+  .row-num { color: var(--text-dim); font-size: 12px; font-weight: 500; }
+
+  .btn-del {
+    background: transparent;
+    border: 1px solid rgba(224,82,82,0.3);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: var(--red);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .btn-del:hover { background: rgba(224,82,82,0.1); border-color: var(--red); }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--text-dim);
+  }
+
+  .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-state p { font-size: 13px; }
+
+  /* FOOTER */
+  footer {
+    margin-top: 60px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 24px 32px;
+    text-align: center;
+  }
+
+  .footer-inner { max-width: 1400px; margin: 0 auto; }
+
+  footer p { font-size: 12px; color: var(--text-dim); }
+  footer span { color: var(--gold); }
+
+  /* NOTIFICATION */
+  .notif {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 13px;
+    color: var(--gold-light);
+    box-shadow: var(--shadow);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
+    z-index: 999;
+  }
+
+  .notif.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 900px) {
+    main { flex-direction: column; padding: 20px 16px; }
+    .sidebar { width: 100%; position: static; }
+    header { padding: 0 16px; }
+    .hero { padding: 28px 16px; }
+    .hero-text h2 { font-size: 20px; }
+    .stats-row { gap: 12px; }
+    .stat-card { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-block">
+      <div class="logo-icon">📚</div>
+      <div class="logo-text">
+        <h1 id="hdr-title">Ғылыми жоба картотекасы</h1>
+        <p id="hdr-sub">ЖТН AP23490584 · Абай атындағы ҚазҰПУ</p>
+      </div>
+    </div>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('kz')">ҚАЗ</button>
+      <button class="lang-btn" onclick="setLang('ru')">РУС</button>
+      <button class="lang-btn" onclick="setLang('en')">ENG</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge" id="hero-badge">ЖТН AP23490584</div>
+      <h2 id="hero-title">Түркі халықтары әдебиетіндегі <span>«Ояну дәуірінің»</span> жырлану ерекшелігі</h2>
+      <p id="hero-desc">ХІХ ғасырдың соңы мен ХХ ғасырдың басындағы зерттеулер. Кітапхана қорынан жиналған материалдардың ғылыми картотекасы.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="num" id="stat-total">0</span>
+        <span class="lbl" id="stat-total-lbl">Барлығы</span>
+      </div>
+      <div class="stat-card">
+        <span class="num" id="stat-kz">0</span>
+        <span class="lbl" id="stat-kz-lbl">Қазақша</span>
+      </div>
+      <div class="stat-card">
+        <span class="num" id="stat-ru">0</span>
+        <span class="lbl" id="stat-ru-lbl">Орысша</span>
+      </div>
+      <div class="stat-card">
+        <span class="num" id="stat-en">0</span>
+        <span class="lbl" id="stat-en-lbl">Ағылшынша</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon">✏️</div>
+        <h3 id="form-title">Жаңа жазба қосу</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label" id="lbl-author">Автор(лар)</label>
+          <input type="text" class="form-input" id="inp-author" placeholder="Иванов И.И.">
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="lbl-title">Еңбек атауы</label>
+          <input type="text" class="form-input" id="inp-title" placeholder="...">
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="lbl-source">Дереккөз / Кітапхана</label>
+          <input type="text" class="form-input" id="inp-source" placeholder="ҚазҰПУ кітапханасы">
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="lbl-year">Жыл</label>
+          <input type="number" class="form-input" id="inp-year" placeholder="2024" min="1800" max="2025">
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="lbl-type">Түрі</label>
+          <select class="form-select" id="inp-type">
+            <option value="article" id="opt-article">Мақала</option>
+            <option value="book" id="opt-book">Кітап</option>
+            <option value="thesis" id="opt-thesis">Конференция тезистері</option>
+            <option value="diss" id="opt-diss">Диссертация</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="lbl-lang">Тіл</label>
+          <select class="form-select" id="inp-lang">
+            <option value="kz">Қазақша</option>
+            <option value="ru">Орысша</option>
+            <option value="en">Ағылшынша</option>
+            <option value="other" id="opt-other">Басқа</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="lbl-note">Ескертпе</label>
+          <input type="text" class="form-input" id="inp-note" placeholder="...">
+        </div>
+        <button class="btn-primary" onclick="addEntry()" id="btn-add">➕ Қосу</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- TABLE SECTION -->
+  <div class="table-section">
+    <div class="filters-row">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search" oninput="filterTable()" placeholder="Автор, атау, кілт сөз...">
+      </div>
+      <div class="filter-wrap">
+        <select class="filter-select" id="ft-type" onchange="filterTable()">
+          <option value="" id="fopt-all-types">Барлық түрлер</option>
+          <option value="article" id="fopt-article">Мақала</option>
+          <option value="book" id="fopt-book">Кітап</option>
+          <option value="thesis" id="fopt-thesis">Тезистер</option>
+          <option value="diss" id="fopt-diss">Диссертация</option>
+        </select>
+      </div>
+      <div class="filter-wrap">
+        <select class="filter-select" id="ft-lang" onchange="filterTable()">
+          <option value="" id="fopt-all-langs">Барлық тілдер</option>
+          <option value="kz">Қазақша</option>
+          <option value="ru">Орысша</option>
+          <option value="en">Ағылшынша</option>
+          <option value="other" id="fopt-other">Басқа</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-top">
+        <h3 id="tbl-heading">Жарияланымдар тізімі</h3>
+        <span class="table-count" id="tbl-count">0 жазба</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th id="th-num">№</th>
+              <th id="th-author">Автор(лар)</th>
+              <th id="th-title">Еңбек атауы</th>
+              <th id="th-source">Дереккөз</th>
+              <th id="th-year">Жыл</th>
+              <th id="th-type">Түрі</th>
+              <th id="th-lang">Тіл</th>
+              <th id="th-note">Ескертпе</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty-state" id="empty-state">
+          <div class="icon">📋</div>
+          <p id="empty-text">Жазбалар жоқ. Жаңа жарияланым қосыңыз.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p id="footer-text">© 2025 <span>Ғылыми жоба картотекасы</span> · ЖТН AP23490584 · Абай атындағы ҚазҰПУ</p>
+  </div>
+</footer>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ============== TRANSLATIONS ==============
+const T = {
+  kz: {
+    hdrTitle: 'Ғылыми жоба картотекасы',
+    hdrSub: 'ЖТН AP23490584 · Абай атындағы ҚазҰПУ',
+    heroTitle: 'Түркі халықтары әдебиетіндегі <span>«Ояну дәуірінің»</span> жырлану ерекшелігі',
+    heroDesc: 'ХІХ ғасырдың соңы мен ХХ ғасырдың басындағы зерттеулер. Кітапхана қорынан жиналған материалдардың ғылыми картотекасы.',
+    statTotal: 'Барлығы', statKz: 'Қазақша', statRu: 'Орысша', statEn: 'Ағылшынша',
+    formTitle: 'Жаңа жазба қосу',
+    lblAuthor: 'Автор(лар)', lblTitle: 'Еңбек атауы', lblSource: 'Дереккөз / Кітапхана',
+    lblYear: 'Жыл', lblType: 'Түрі', lblLang: 'Тіл', lblNote: 'Ескертпе',
+    btnAdd: '➕ Қосу',
+    optArticle: 'Мақала', optBook: 'Кітап', optThesis: 'Конференция тезистері',
+    optDiss: 'Диссертация', optOther: 'Басқа',
+    foptAllTypes: 'Барлық түрлер', foptArticle: 'Мақала', foptBook: 'Кітап',
+    foptThesis: 'Тезистер', foptDiss: 'Диссертация', foptAllLangs: 'Барлық тілдер', foptOther: 'Басқа',
+    searchPlaceholder: 'Автор, атау, кілт сөз...',
+    tblHeading: 'Жарияланымдар тізімі', tblCount: (n) => `${n} жазба`,
+    thNum: '№', thAuthor: 'Автор(лар)', thTitle: 'Еңбек атауы', thSource: 'Дереккөз',
+    thYear: 'Жыл', thType: 'Түрі', thLang: 'Тіл', thNote: 'Ескертпе',
+    emptyText: 'Жазбалар жоқ. Жаңа жарияланым қосыңыз.',
+    notifAdded: '✅ Жазба сәтті қосылды!', notifDeleted: '🗑️ Жазба жойылды',
+    footerText: '© 2025 <span>Ғылыми жоба картотекасы</span> · ЖТН AP23490584 · Абай атындағы ҚазҰПУ',
+    langLabels: { kz: 'Қазақша', ru: 'Орысша', en: 'Ағылшынша', other: 'Басқа' },
+    typeLabels: { article: 'Мақала', book: 'Кітап', thesis: 'Тезистер', diss: 'Диссертация' },
+  },
+  ru: {
+    hdrTitle: 'Картотека научного проекта',
+    hdrSub: 'ГФ AP23490584 · КазНПУ им. Абая',
+    heroTitle: 'Особенности воспевания <span>«Эпохи пробуждения»</span> в литературе тюркских народов',
+    heroDesc: 'Конец XIX — начало XX века. Научная картотека материалов, собранных из фондов библиотек.',
+    statTotal: 'Всего', statKz: 'Казахский', statRu: 'Русский', statEn: 'Английский',
+    formTitle: 'Добавить новую запись',
+    lblAuthor: 'Автор(ы)', lblTitle: 'Название труда', lblSource: 'Источник / Библиотека',
+    lblYear: 'Год', lblType: 'Тип', lblLang: 'Язык', lblNote: 'Примечание',
+    btnAdd: '➕ Добавить',
+    optArticle: 'Статья', optBook: 'Книга', optThesis: 'Тезисы конференции',
+    optDiss: 'Диссертация', optOther: 'Другой',
+    foptAllTypes: 'Все типы', foptArticle: 'Статья', foptBook: 'Книга',
+    foptThesis: 'Тезисы', foptDiss: 'Диссертация', foptAllLangs: 'Все языки', foptOther: 'Другой',
+    searchPlaceholder: 'Автор, название, ключевые слова...',
+    tblHeading: 'Список публикаций', tblCount: (n) => `${n} записей`,
+    thNum: '№', thAuthor: 'Автор(ы)', thTitle: 'Название', thSource: 'Источник',
+    thYear: 'Год', thType: 'Тип', thLang: 'Язык', thNote: 'Примечание',
+    emptyText: 'Записей нет. Добавьте новую публикацию.',
+    notifAdded: '✅ Запись успешно добавлена!', notifDeleted: '🗑️ Запись удалена',
+    footerText: '© 2025 <span>Картотека научного проекта</span> · ГФ AP23490584 · КазНПУ им. Абая',
+    langLabels: { kz: 'Казахский', ru: 'Русский', en: 'Английский', other: 'Другой' },
+    typeLabels: { article: 'Статья', book: 'Книга', thesis: 'Тезисы', diss: 'Диссертация' },
+  },
+  en: {
+    hdrTitle: 'Scientific Project Card Catalog',
+    hdrSub: 'GF AP23490584 · Abai KazNPU',
+    heroTitle: 'Features of Singing the <span>"Era of Awakening"</span> in Turkic Literature',
+    heroDesc: 'Late 19th – early 20th century. Scientific catalog of materials gathered from library collections.',
+    statTotal: 'Total', statKz: 'Kazakh', statRu: 'Russian', statEn: 'English',
+    formTitle: 'Add New Entry',
+    lblAuthor: 'Author(s)', lblTitle: 'Work Title', lblSource: 'Source / Library',
+    lblYear: 'Year', lblType: 'Type', lblLang: 'Language', lblNote: 'Note',
+    btnAdd: '➕ Add Entry',
+    optArticle: 'Article', optBook: 'Book', optThesis: 'Conference Thesis',
+    optDiss: 'Dissertation', optOther: 'Other',
+    foptAllTypes: 'All Types', foptArticle: 'Article', foptBook: 'Book',
+    foptThesis: 'Thesis', foptDiss: 'Dissertation', foptAllLangs: 'All Languages', foptOther: 'Other',
+    searchPlaceholder: 'Author, title, keywords...',
+    tblHeading: 'Publications List', tblCount: (n) => `${n} records`,
+    thNum: '#', thAuthor: 'Author(s)', thTitle: 'Title', thSource: 'Source',
+    thYear: 'Year', thType: 'Type', thLang: 'Language', thNote: 'Note',
+    emptyText: 'No entries yet. Add a new publication.',
+    notifAdded: '✅ Entry added successfully!', notifDeleted: '🗑️ Entry deleted',
+    footerText: '© 2025 <span>Scientific Project Catalog</span> · GF AP23490584 · Abai KazNPU',
+    langLabels: { kz: 'Kazakh', ru: 'Russian', en: 'English', other: 'Other' },
+    typeLabels: { article: 'Article', book: 'Book', thesis: 'Thesis', diss: 'Dissertation' },
+  }
+};
+
+let currentLang = 'kz';
+
+const PRELOADED = [
+  // === ӨЗБЕКСТАН (20 жазба) ===
+  {id:1001,author:"Қосимов Бегали",title:"Милли уйғониш: Жасорат, маърифат, фидойилик. Тошкент: Маънавият, 2002. — 400 б.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2002",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1002,author:"Болтабоев Х.",title:"Абдурауф Фитрат. Тошкент: Ёзувчи, 1996.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"1996",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1003,author:"Сотимжон Холбоев",title:"Туркистон жадидчилиги — миллий уйғониш даври тарихи. Наманган, 2012. — 326 б.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2012",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1004,author:"Авлоний Абдулла",title:"Таржимаи ҳолим. Миллий уйғониш ва ўзбек филологияси масалалари. Тошкент: Университет, 1993.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"1993",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1005,author:"Балдауф Ингеборг",title:"Джадидизм в Центральной Азии в плане реформизма и модернизма в мусульманском мире // Халқаро конференция материаллари. Т.: Маънавият, 2001.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2001",type:"thesis",lang:"ru",note:"Орыс тілінде"},
+  {id:1006,author:"Редакторы: Косимов Б., Абдирашидов З.",title:"Гаспринский Исмоилбек. Вопрос жизни и смерти. Избранные произведения. Т.: Манавият, 2006.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2006",type:"book",lang:"ru",note:"Орыс тілінде"},
+  {id:1007,author:"Маҳмудхўжа Беҳбудий",title:"Маҳмудхўжа Беҳбудий. Танланган асарлар. Тошкент: Маънавият, 1997.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"1997",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1008,author:"Содиқов Ҳ.",title:"Ўзбекистоннинг янги тарихи. Туркистон чор Россияси мустамлакачилиги даврида. Тошкент: Шарқ, 2000.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2000",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1009,author:"Рафаэль Хаким",title:"Джадидизм (Реформированный ислам). Казань: Институт истории АН РТ, 2010. — 208 с.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2010",type:"book",lang:"ru",note:"Орыс тілінде"},
+  {id:1010,author:"Фархшатов М.",title:"Автономные и традиционные школы начала XX века (1900-1917). Уфа: Гилем, 2000.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2000",type:"book",lang:"ru",note:"Орыс тілінде"},
+  {id:1011,author:"Рустамбек Шамсутдинов, Азизбек Маҳкамов, Нигорахон Акбарова",title:"Ўрта Осиёда жадидчилик ҳаракати тарихи. Тошкент: Akademnashr, 2025. — 336 б.",source:"Электрон кітап",year:"2025",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1012,author:"Рустам Шарипов",title:"Туркистон жадидчилик харакати тарихидан. Тошкент: Уқитоувчи, 2002. — 175 б.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2002",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1013,author:"Қосимов Б., Юсупов Ш., Долимов У., Ризаев Ш., Ахмедов С.",title:"Милли уйғониш даври узбек адабиёти. Тошкент: Маънавият, 2004. — 296 с.",source:"Алишер Навоий атындағы Өзбекстан Ұлттық кітапханасы",year:"2004",type:"book",lang:"other",note:"Өзбек тілінде"},
+  {id:1014,author:"Дулатұлы М.",title:"Оян, қазақ! Алматы: Алтын Орда, 1991. — 80 б.",source:"Орталық ғылыми кітапхана",year:"1991",type:"book",lang:"kz",note:"Қазақ тілінде"},
+  {id:1015,author:"Құрастырған: Т.Қыдыр",title:"Оян, қазақ! Тұр, қазақ! Жатпа, қазақ! Алматы: Таңбалы, 2016. — 180 б.",source:"Орталық ғылыми кітапхана",year:"2016",type:"book",lang:"kz",note:"Қазақ тілінде"},
+  {id:1016,author:"Сыдыков О.",title:"Тарих кыргыз Шадмания. Кыргыз санжырасы. Фрунзе: Кыргызстан, 1990. — 112 б.",source:"Центральная научная библиотека НАН Кыргызской Республики",year:"1990",type:"book",lang:"other",note:"Қырғыз тілінде"},
+  {id:1017,author:"Ұжымдық монография",title:"Кыргыз адабиятынын тарыхы. ХХ ыкылымдун кыргыз адабияты (20-60 жылдар). Бишкек: Аврасия-пресс, 2015. — 464 б.",source:"Центральная научная библиотека НАН Кыргызской Республики",year:"2015",type:"book",lang:"other",note:"Қырғыз тілінде. Академиялық басылым"},
+  {id:1018,author:"Bayramoğlu A.",title:"Azərbaycan demokratik respublikası dövründə ədəbiyyat. Bakı: Elm, 2003. — 276 s.",source:"Электрон кітапхана",year:"2003",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:1019,author:"Mehmet Akif Ersoy",title:"Şiir külliyatı. Yayına hazırlayan Necmettin Turinay. Ankara, 2021. — 1018 s.",source:"Электрон кітапхана",year:"2021",type:"book",lang:"other",note:"Түрік тілінде"},
+  {id:1020,author:"Ауд. Т.Қыдыр",title:"Хусеин Жәуид. Өлеңдер. Алматы: Қазақ университеті, 2018. — 269+7 б.",source:"ҚазҰУ Әл-Фараби кітапханасы",year:"2018",type:"book",lang:"kz",note:"Қазақ және әзербайжан тілдерінде"},
+  // === ҚЫРҒЫЗСТАН (30 жазба) ===
+  {id:2001,author:"Осмонов С.",title:"Кыргыз адабиятынын тарыхы. XIX кылымдын аягы — XX кылымдын башы. Бишкек, 2004. — 320 б.",source:"Кыргыз Республикасынын Улуттук китепканасы",year:"2004",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2002,author:"Сыдыков О.",title:"Тарых кыргыз Шадмания. Кыргыз санжырасы. Фрунзе: Кыргызстан, 1990. — 112 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"1990",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2003,author:"Жолдошбеков К.",title:"Кыргыз адабияты: Окуу куралы. Бишкек, 2010. — 240 б.",source:"Кыргыз улуттук университетинин китепканасы",year:"2010",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2004,author:"Абдылдаев Э.",title:"Кыргыз поэзиясынын тарыхы. Бишкек, 2008. — 280 б.",source:"Кыргыз Республикасынын Улуттук китепканасы",year:"2008",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2005,author:"Молдо Нияз",title:"Молдо Нияздын чыгармалары. Бишкек, 1995. — 180 б.",source:"Кыргыз Республикасынын Улуттук китепканасы",year:"1995",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2006,author:"Токтогул Сатылганов",title:"Токтогул Сатылганов. Тандалган чыгармалар. Бишкек, 2003. — 350 б.",source:"Кыргыз Республикасынын Улуттук китепканасы",year:"2003",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2007,author:"Барпы Алыкулов",title:"Барпы Алыкулов. Ырлар жыйнагы. Бишкек, 2001. — 210 б.",source:"Кыргыз Республикасынын Улуттук китепканасы",year:"2001",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2008,author:"Коллективдүү эмгек",title:"Кыргыз эл акындарынын чыгармачылыгы. Бишкек, 2012. — 400 б.",source:"Улуттук илимдер академиясынын китепканасы",year:"2012",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2009,author:"Мамытов Т.",title:"Кыргыз поэзиясындагы агартуу идеялары. Бишкек, 2015. — 220 б.",source:"Кыргыз Республикасынын Улуттук китепканасы",year:"2015",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2010,author:"Коллективдүү монография",title:"Кыргыз адабиятынын тарыхы (XIX—XX кк.). Бишкек, 2018. — 500 б.",source:"Улуттук илимдер академиясы",year:"2018",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2011,author:"Коллектив",title:"Кыргыз адабияты: энциклопедия. Бишкек, 2004. — 600 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2004",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2012,author:"Мамытов Т.",title:"Кыргыз адабиятынын өнүгүү этаптары. Бишкек, 2015. — 260 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2015",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2013,author:"Омурзаков С.",title:"Кыргыз адабияты XIX кылымда. Бишкек, 2007. — 230 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2007",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2014,author:"Ибраимов О.",title:"Кыргыз жазма адабиятынын башталышы. Бишкек, 2009. — 190 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2009",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2015,author:"Садыков Ж.",title:"Кыргыз поэзиясындагы салт жана жаңычылдык. Бишкек, 2014. — 210 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2014",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2016,author:"Коллектив",title:"Кыргыз эл оозеки чыгармачылыгы. Бишкек, 2003. — 300 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2003",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2017,author:"Абдрахманов Б.",title:"Кыргыз адабияты жана фольклор. Бишкек, 2011. — 270 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2011",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2018,author:"Коллектив",title:"Кыргыз акындары: биобиблиография. Бишкек, 2005. — 350 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2005",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2019,author:"Артыкбаев К.",title:"Кыргыз адабиятынын проблемалары. Бишкек, 2017. — 240 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2017",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2020,author:"Коллектив",title:"Кыргыз поэзиясы: антология. Бишкек, 2002. — 450 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2002",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2021,author:"Мамытов Т.",title:"Кыргыз адабиятынын теориясы. Бишкек, 2013. — 260 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2013",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2022,author:"Коллектив",title:"Кыргыз адабиятынын изилдөөлөрү. Бишкек, 2018. — 300 б.",source:"Улуттук илимдер академиясы",year:"2018",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2023,author:"Садыков Ж.",title:"Кыргыз поэзиясындагы көркөм образ. Бишкек, 2015. — 210 б.",source:"Улуттук китепкана",year:"2015",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2024,author:"Жолдошбеков К.",title:"Кыргыз адабияты боюнча лекциялар. Бишкек, 2012. — 180 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2012",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2025,author:"Коллектив",title:"Кыргыз адабияты: тексттер жана талдоолор. Бишкек, 2019. — 320 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2019",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2026,author:"Молдо Кылыч",title:"Молдо Кылыч: чыгармалар. Бишкек, 1991. — 200 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"1991",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2027,author:"Тоголок Молдо",title:"Тоголок Молдо: тандалган чыгармалар. Бишкек, 1958. — 300 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"1958",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2028,author:"Коллектив",title:"Кыргыз адабиятынын тарыхы (20—60-жж.). Бишкек, 2015. — 464 б.",source:"Улуттук илимдер академиясы",year:"2015",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2029,author:"Жолдошбеков К.",title:"Кыргыз поэзиясындагы агартуу агымы. Бишкек, 2016. — 210 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2016",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  {id:2030,author:"Акматалиев А.",title:"Кыргыз адабияты: тарых жана мезгил. Бишкек, 2010. — 280 б.",source:"Кыргыз-Түрк Манас университетинин Борбордук китепканасы",year:"2010",type:"book",lang:"other",note:"Кыргыз тилинде"},
+  // === ӘЗЕРБАЙЖАН (34 жазба) ===
+  {id:3001,author:"Məmməd Araz",title:"Atamın kitabı. Bakı: Gənclik, 1974. — 167 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1974",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3002,author:"Məmməd Araz",title:"Daş harayı. Bakı: Yazıçı, 1992. — 255 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1992",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3003,author:"Məmməd Araz",title:"Dünya sənin, dünya mənim. Bakı: Yazıçı, 1983. — 301 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1983",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3004,author:"Məmməd Araz",title:"Seçilmiş əsərləri. Bakı: Azərnəşr, 1986. — 480 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1986",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3005,author:"Məmməd Araz",title:"Seçilmiş əsərləri. 4 cilddə. I cild. Bakı: Ozan, 2003. — 348 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2003",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3006,author:"Məmməd Araz",title:"Seçilmiş əsərləri. 4 cilddə. II cild. Bakı: Ozan, 2003. — 332 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2003",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3007,author:"Məmməd Araz",title:"Seçilmiş əsərləri. 4 cilddə. III cild. Bakı: Ozan, 2003. — 368 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2003",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3008,author:"Məmməd Araz",title:"Seçilmiş əsərləri. Bakı: Xalq Bank, 2010. — 656 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2010",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3009,author:"Коллектив",title:"Azərbaycan bayatıları. Bakı: XXI YNE, 2004. — 304 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2004",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3010,author:"Nicolas Boileau",title:"Poeziya sənəti. Bakı: Şərq-Qərb, 2007. — 408 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2007",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3011,author:"Əhməd Cavad",title:"Seçilmiş əsərləri. Bakı: Şərq-Qərb, 2005. — 296 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2005",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3012,author:"Əzizxanlı Q.",title:"Çağdaş Azərbaycan şeirində xalq arxetipi və xalq yaradıcılığı problemi, 2017.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2017",type:"article",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3013,author:"Əzizxanlı Q.",title:"Çağdaş poeziyada Bütöv Azərbaycan idealının poetik tərənnümü, 2018.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2018",type:"article",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3014,author:"Əzizxanlı Q.",title:"Çağdaş vətəndaşlıq lirikasında həqiqi vətənpərvərlik..., 2017.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2017",type:"article",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3015,author:"Əzizxanlı Q.",title:"Məmməd Araz poeziyasında Bütöv Azərbaycan ideyası, 2018.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2018",type:"article",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3016,author:"Gülgün M.",title:"Çinar olaydım. Bakı: Azərnəşr, 1968. — 238 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1968",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3017,author:"Məhəmməd Hadi",title:"Seçilmiş əsərləri. Bakı: Şərq-Qərb, 2005. — 464 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2005",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3018,author:"Nəriman Həsənzadə",title:"Fikir eləmə. Bakı: Gənclik, 1982. — 136 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1982",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3019,author:"Nəriman Həsənzadə",title:"Taleyimin töhfəsi. Bakı: Gənclik, 1993. — 352 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1993",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3020,author:"Gülgün M.",title:"Çinar olaydım. Bakı: Azərnəşr, 1968. — 238 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1968",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3021,author:"Nabi Khazri",title:"Seçilmiş əsərləri. Bakı: Lider Nəşriyyat, 2004. — 248 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2004",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3022,author:"Məmməd İsmayıl",title:"Qoymayın dünyanı adiləşməyə. Bakı: Gənclik, 1978. — 150 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1978",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3023,author:"Məmməd İsmayıl",title:"Seçilmiş əsərləri. Bakı: Azərnəşr, 1992. — 304 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1992",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3024,author:"Əli Kərim",title:"Secilmiş əsərləri. Bakı: Azərnəşr, 1974. — 408 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1974",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3025,author:"Fikrət Qoca",title:"Gül ömrü. Bakı: Gənclik, 1976. — 168 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1976",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3026,author:"Rəsul Rza",title:"Seçilmiş əsərləri. Bakı: Şərq-Qərb, 2005. — 304 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2005",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3027,author:"Mirzə Ələkbər Sabir",title:"Hophopnamə. Bakı: Yazıçı, 1979. — 558 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1979",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3028,author:"Abbas Səhhət",title:"Seçilmiş əsərləri. Bakı: Lider Nəşriyyat, 2005. — 456 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2005",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3029,author:"Mohammad-Hossein Shahriar",title:"Yalan dünya. Bakı: Azərbaycan Ensiklopediyası, 1993. — 496 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1993",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3030,author:"Bəxtiyar Vahabzadə",title:"Seçilmiş əsərləri. Bakı: Öndər Nəşriyyat, 2004. — 328 s.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2004",type:"book",lang:"other",note:"Әзербайжан тілінде"},
+  {id:3031,author:"Юрий Лотман",title:"Анализ поэтического текста. Ленинград: Просвещение, 1972. — 271 с.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1972",type:"book",lang:"ru",note:"Орыс тілінде"},
+  {id:3032,author:"Юрий Лотман",title:"Структура художественного текста. Москва: Искусство, 1970. — 384 с.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"1970",type:"book",lang:"ru",note:"Орыс тілінде"},
+  {id:3033,author:"Əzizxanlı Q.",title:"Romanticism in the context of the civil lyrics. 2020.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2020",type:"article",lang:"en",note:"Ағылшын тілінде"},
+  {id:3034,author:"Azizxanlı K.",title:"XX. Yüzyılda Azerbaycan şiiri üzerine... 2017.",source:"Әзербайжанның Ғылым академиясының Орталық ғылыми кітапханасы",year:"2017",type:"article",lang:"other",note:"Түрік тілінде"},
+];
+
+// Merge preloaded with localStorage (avoid duplicates by id)
+const stored = JSON.parse(localStorage.getItem('kartoteka_v2') || '[]');
+const storedIds = new Set(stored.map(e => e.id));
+const preloadedNew = PRELOADED.filter(e => !storedIds.has(e.id));
+let entries = [...stored, ...preloadedNew];
+
+// ============== LANGUAGE ==============
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  applyLang();
+  renderTable();
+  updateStats();
+}
+
+function t(key) { return T[currentLang][key] || key; }
+
+function applyLang() {
+  const L = T[currentLang];
+  document.getElementById('hdr-title').textContent = L.hdrTitle;
+  document.getElementById('hdr-sub').textContent = L.hdrSub;
+  document.getElementById('hero-title').innerHTML = L.heroTitle;
+  document.getElementById('hero-desc').textContent = L.heroDesc;
+  document.getElementById('stat-total-lbl').textContent = L.statTotal;
+  document.getElementById('stat-kz-lbl').textContent = L.statKz;
+  document.getElementById('stat-ru-lbl').textContent = L.statRu;
+  document.getElementById('stat-en-lbl').textContent = L.statEn;
+  document.getElementById('form-title').textContent = L.formTitle;
+  document.getElementById('lbl-author').textContent = L.lblAuthor;
+  document.getElementById('lbl-title').textContent = L.lblTitle;
+  document.getElementById('lbl-source').textContent = L.lblSource;
+  document.getElementById('lbl-year').textContent = L.lblYear;
+  document.getElementById('lbl-type').textContent = L.lblType;
+  document.getElementById('lbl-lang').textContent = L.lblLang;
+  document.getElementById('lbl-note').textContent = L.lblNote;
+  document.getElementById('btn-add').textContent = L.btnAdd;
+  document.getElementById('opt-article').textContent = L.optArticle;
+  document.getElementById('opt-book').textContent = L.optBook;
+  document.getElementById('opt-thesis').textContent = L.optThesis;
+  document.getElementById('opt-diss').textContent = L.optDiss;
+  document.getElementById('opt-other').textContent = L.optOther;
+  document.getElementById('fopt-all-types').textContent = L.foptAllTypes;
+  document.getElementById('fopt-article').textContent = L.foptArticle;
+  document.getElementById('fopt-book').textContent = L.foptBook;
+  document.getElementById('fopt-thesis').textContent = L.foptThesis;
+  document.getElementById('fopt-diss').textContent = L.foptDiss;
+  document.getElementById('fopt-all-langs').textContent = L.foptAllLangs;
+  document.getElementById('fopt-other').textContent = L.foptOther;
+  document.getElementById('search').placeholder = L.searchPlaceholder;
+  document.getElementById('tbl-heading').textContent = L.tblHeading;
+  document.getElementById('th-num').textContent = L.thNum;
+  document.getElementById('th-author').textContent = L.thAuthor;
+  document.getElementById('th-title').textContent = L.thTitle;
+  document.getElementById('th-source').textContent = L.thSource;
+  document.getElementById('th-year').textContent = L.thYear;
+  document.getElementById('th-type').textContent = L.thType;
+  document.getElementById('th-lang').textContent = L.thLang;
+  document.getElementById('th-note').textContent = L.thNote;
+  document.getElementById('empty-text').textContent = L.emptyText;
+  document.getElementById('footer-text').innerHTML = L.footerText;
+  document.getElementById('inp-author').placeholder = 'Иванов И.И.';
+}
+
+// ============== ENTRIES ==============
+function addEntry() {
+  const author = document.getElementById('inp-author').value.trim();
+  const title = document.getElementById('inp-title').value.trim();
+  if (!author || !title) { showNotif('⚠️ ' + (currentLang==='kz' ? 'Автор мен атауды толтырыңыз' : currentLang==='en' ? 'Fill in author and title' : 'Заполните автора и название')); return; }
+  const entry = {
+    id: Date.now(),
+    author,
+    title,
+    source: document.getElementById('inp-source').value.trim(),
+    year: document.getElementById('inp-year').value,
+    type: document.getElementById('inp-type').value,
+    lang: document.getElementById('inp-lang').value,
+    note: document.getElementById('inp-note').value.trim()
+  };
+  entries.unshift(entry);
+  save();
+  ['inp-author','inp-title','inp-source','inp-year','inp-note'].forEach(id => document.getElementById(id).value = '');
+  renderTable();
+  updateStats();
+  showNotif(T[currentLang].notifAdded);
+}
+
+function deleteEntry(id) {
+  entries = entries.filter(e => e.id !== id);
+  save();
+  renderTable();
+  updateStats();
+  showNotif(T[currentLang].notifDeleted);
+}
+
+function save() { localStorage.setItem('kartoteka_v2', JSON.stringify(entries)); }
+
+// ============== RENDER ==============
+function renderTable() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const ft = document.getElementById('ft-type').value;
+  const fl = document.getElementById('ft-lang').value;
+  const L = T[currentLang];
+
+  let filtered = entries.filter(e => {
+    const matchSearch = !search || e.author.toLowerCase().includes(search) || e.title.toLowerCase().includes(search) || (e.note||'').toLowerCase().includes(search);
+    const matchType = !ft || e.type === ft;
+    const matchLang = !fl || e.lang === fl;
+    return matchSearch && matchType && matchLang;
+  });
+
+  const tbody = document.getElementById('tbody');
+  const empty = document.getElementById('empty-state');
+
+  document.getElementById('tbl-count').textContent = L.tblCount(filtered.length);
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = filtered.map((e, i) => `
+    <tr>
+      <td class="row-num">${i + 1}</td>
+      <td class="td-author">${esc(e.author)}</td>
+      <td class="td-title">${esc(e.title)}</td>
+      <td class="td-source">${esc(e.source || '—')}</td>
+      <td class="td-year">${e.year || '—'}</td>
+      <td><span class="badge badge-type-${e.type}">${L.typeLabels[e.type] || e.type}</span></td>
+      <td><span class="badge badge-lang-${e.lang}">${L.langLabels[e.lang] || e.lang}</span></td>
+      <td class="td-source">${esc(e.note || '—')}</td>
+      <td><button class="btn-del" onclick="deleteEntry(${e.id})">✕</button></td>
+    </tr>
+  `).join('');
+}
+
+function filterTable() { renderTable(); }
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = entries.length;
+  document.getElementById('stat-kz').textContent = entries.filter(e=>e.lang==='kz').length;
+  document.getElementById('stat-ru').textContent = entries.filter(e=>e.lang==='ru').length;
+  document.getElementById('stat-en').textContent = entries.filter(e=>e.lang==='en').length;
+}
+
+// ============== NOTIF ==============
+let notifTimer;
+function showNotif(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.classList.add('show');
+  clearTimeout(notifTimer);
+  notifTimer = setTimeout(() => n.classList.remove('show'), 2500);
+}
+
+// ============== INIT ==============
+applyLang();
+renderTable();
+updateStats();
+</script>
+</body>
+</html>
